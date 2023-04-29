@@ -1,8 +1,7 @@
-#include <SFML/Graphics.hpp>
+#ifndef POWERBAR_HPP
+#define POWERBAR_HPP
 
-#define BAR_WIDTH 20
-#define BAR_OUTLINE_WIDTH 5
-
+#include "Definitions.hpp"
 class PowerBar
 {
     public:
@@ -23,3 +22,5 @@ class PowerBar
             float               _barRotationAngle;
             sf::Vector2f        _barDirVec;
 };
+
+#endif // POWERBAR_HPP
