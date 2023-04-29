@@ -3,6 +3,9 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Player.hpp"
+#include "PowerBar.hpp"
+
 class Game : private sf::NonCopyable
 {
     public:
@@ -14,11 +17,16 @@ class Game : private sf::NonCopyable
         void                    update(sf::Time /*elapsed Time*/);
         void                    render();
 
-        void                    handlePlayerInput(sf::Keyboard::Key /*pressed key*/, bool isPressed);
+        void                    handlePlayerKeyboardInput(sf::Keyboard::Key /*key code*/, bool /*pressed or release*/);
+        void                    handlePlayerMouseInput(sf::Mouse::Button /*button code*/, bool /*pressed or release*/);
 
         static const sf::Time   TimePerFrame;
 
-        sf::RenderWindow        mWindow;
+        sf::RenderWindow        _window;
+        Player                  _player;
+        PowerBar                _powerbar;
+
+        bool                    _leftMouseButtonHold{false};
 };
 
 #endif // GAME_HPP

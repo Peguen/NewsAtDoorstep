@@ -1,6 +1,8 @@
 set(SRC_FILES 
     main.cpp
     Game.cpp
+    Player.cpp
+    PowerBar.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
