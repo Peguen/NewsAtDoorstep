@@ -1,5 +1,7 @@
 #include <Game.hpp>
 
+#include <iostream>
+
 const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
 Game::Game()
@@ -9,6 +11,11 @@ Game::Game()
 
     // set player start position
     _player.setPosition(sf::Vector2f(_window.getSize().x / 2, _window.getSize().y - _player.getSize().y));
+
+    _directionMap[DIRECTION::UP] = sf::Vector2f(0,-1);
+    _directionMap[DIRECTION::DOWN] = sf::Vector2f(0,1);
+    _directionMap[DIRECTION::LEFT] = sf::Vector2f(-1,0);
+    _directionMap[DIRECTION::RIGHT] = sf::Vector2f(1,0);
 }
 
 void Game::run() 
@@ -70,6 +77,14 @@ void Game::update(sf::Time elapsedTime)
         auto currentMousePos = sf::Mouse::getPosition(_window);
         _powerbar.setEndPoint(sf::Vector2f(currentMousePos));
     }
+
+    if (_playerIsMoving)
+        _player.move(_directionMap[_currentPlayerDirection]);
+
+    for (auto& paper : _newspaperVector)
+    {
+        paper->move(elapsedTime);
+    }
 }
 
 void Game::render()
@@ -79,16 +94,57 @@ void Game::render()
     
     if(_leftMouseButtonHold)
         _powerbar.drawPowerBar(_window);	
+
+    for (auto& paper : _newspaperVector)
+    {
+        paper->drawNewspaper(_window);
+    }
 	
     _window.display();
 }
 
-void Game::handlePlayerKeyboardInput(sf::Keyboard::Key /*pressed key*/, bool isPressed)
+void Game::handlePlayerKeyboardInput(sf::Keyboard::Key key, bool isPressed)
 {
-    // Do some player input handling here
+    if (isPressed)
+    {
+        switch (key)
+        {
+            case sf::Keyboard::A:
+            {
+                _currentPlayerDirection = DIRECTION::LEFT;
+                _playerIsMoving = true;
+                break;
+            }
+            case sf::Keyboard::D:
+            {
+                _currentPlayerDirection = DIRECTION::RIGHT;
+                _playerIsMoving = true;
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    else
+    {
+        switch (key)
+        {
+            case sf::Keyboard::A:
+            {
+                _playerIsMoving = false;
+                break;
+            }
+            case sf::Keyboard::D:
+            {
+                _playerIsMoving = false;
+                break;
+            }
+            default:
+                break;
+        }
+    }
 }
 
-#include <iostream>
 void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
 {
     if (isPressed)
@@ -114,8 +170,13 @@ void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
         switch (button)
         {
             case sf::Mouse::Button::Left:
+            {
+                auto new_paper = std::make_shared<Newspaper>();
+                new_paper->startFlying(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle());
+                _newspaperVector.push_back(new_paper);
                 _leftMouseButtonHold = false;
                 break;
+            }
             case sf::Mouse::Button::Right:
                 std::cout << "Right button released" << std::endl;
                 break;

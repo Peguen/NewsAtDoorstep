@@ -9,15 +9,17 @@ class PowerBar
         PowerBar();
         ~PowerBar() {};
 
-        void    setStartPoint(sf::Vector2f /*starting point of bar*/);
-        void    setEndPoint(sf::Vector2f /*end point of bar*/);
-        float   getLength();
-        float   getBarRotationAngle();
+        void            setStartPoint(sf::Vector2f /*starting point of bar*/);
+        void            setEndPoint(sf::Vector2f /*end point of bar*/);
+        float           getLength();
+        float           getBarRotationAngle();
+        sf::Vector2f    getBarDirectionVector();
 
-        void    drawPowerBar(sf::RenderWindow& /*main window*/);
+        void            drawPowerBar(sf::RenderWindow& /*main window*/);
 
         private:
             sf::RectangleShape  _bar;
             float               _barLength;
             float               _barRotationAngle;
+            sf::Vector2f        _barDirVec;
 };

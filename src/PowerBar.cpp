@@ -19,11 +19,11 @@ void PowerBar::setStartPoint(sf::Vector2f newStartPoint)
 void PowerBar::setEndPoint(sf::Vector2f newEndPoint)
 {
     // calculate the bar length
-    auto vecDif = newEndPoint - _bar.getPosition();
-    _barLength = std::sqrt(vecDif.x * vecDif.x + vecDif.y * vecDif.y);
+    _barDirVec = newEndPoint - _bar.getPosition();
+    _barLength = std::sqrt(_barDirVec.x * _barDirVec.x + _barDirVec.y * _barDirVec.y);
     _bar.setSize(sf::Vector2f(BAR_WIDTH, _barLength));
     
-    // calculate the bar rotation
+    // calculate the bar rotation with tangens
     //          A
     //          |
     //  lengthA |
@@ -50,6 +50,11 @@ float PowerBar::getLength()
 float PowerBar::getBarRotationAngle()
 {
     return _barRotationAngle;
+}
+
+sf::Vector2f PowerBar::getBarDirectionVector()
+{
+    return _barDirVec;
 }
 
 void PowerBar::drawPowerBar(sf::RenderWindow& window)
