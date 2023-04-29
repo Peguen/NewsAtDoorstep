@@ -1,6 +1,8 @@
-#include <SFML/Graphics.hpp>
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
 
-#define PLAYER_SPEED 10
+#include "Definitions.hpp"
+
 class Player
 {
     public:
@@ -18,3 +20,5 @@ class Player
         sf::Sprite          _playerSprite;
         sf::RectangleShape  _dummyRect;
 };
+
+#endif // PLAYER_HPP

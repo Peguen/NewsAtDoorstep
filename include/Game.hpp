@@ -1,7 +1,7 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include <SFML/Graphics.hpp>
+#include "Definitions.hpp"
 #include <vector>
 
 #include "Player.hpp"
@@ -10,15 +10,6 @@
 
 class Game : private sf::NonCopyable
 {
-    enum DIRECTION
-    {
-        UP,
-        DOWN,
-        LEFT,
-        RIGHT
-    };
-    typedef std::map<DIRECTION, sf::Vector2f> DirectionMap;
-
     public:
                                 Game();
         void                    run();

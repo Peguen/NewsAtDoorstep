@@ -78,6 +78,8 @@ void Game::update(sf::Time elapsedTime)
         _powerbar.setEndPoint(sf::Vector2f(currentMousePos));
     }
 
+    // removeOutOfScreenEntities();
+
     if (_playerIsMoving)
         _player.move(_directionMap[_currentPlayerDirection]);
 
@@ -94,6 +96,12 @@ void Game::render()
     
     if(_leftMouseButtonHold)
         _powerbar.drawPowerBar(_window);	
+    
+    auto it = remove_if(_newspaperVector.begin(), _newspaperVector.end(),
+        [](std::shared_ptr<Newspaper> paper){
+            return paper->removePaper();
+          });
+    _newspaperVector.erase(it, _newspaperVector.end());
 
     for (auto& paper : _newspaperVector)
     {
@@ -172,7 +180,7 @@ void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
             case sf::Mouse::Button::Left:
             {
                 auto new_paper = std::make_shared<Newspaper>();
-                new_paper->startFlying(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle());
+                new_paper->startFlying(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle(), _window.getSize());
                 _newspaperVector.push_back(new_paper);
                 _leftMouseButtonHold = false;
                 break;
