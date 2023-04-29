@@ -2,9 +2,23 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include <vector>
+
+#include "Player.hpp"
+#include "PowerBar.hpp"
+#include "Newspaper.hpp"
 
 class Game : private sf::NonCopyable
 {
+    enum DIRECTION
+    {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
+    };
+    typedef std::map<DIRECTION, sf::Vector2f> DirectionMap;
+
     public:
                                 Game();
         void                    run();
@@ -14,11 +28,22 @@ class Game : private sf::NonCopyable
         void                    update(sf::Time /*elapsed Time*/);
         void                    render();
 
-        void                    handlePlayerInput(sf::Keyboard::Key /*pressed key*/, bool isPressed);
+        void                    handlePlayerKeyboardInput(sf::Keyboard::Key /*key code*/, bool /*pressed or release*/);
+        void                    handlePlayerMouseInput(sf::Mouse::Button /*button code*/, bool /*pressed or release*/);
 
-        static const sf::Time   TimePerFrame;
+        static const sf::Time                       TimePerFrame;
 
-        sf::RenderWindow        mWindow;
+        sf::RenderWindow                            _window;
+        Player                                      _player;
+        PowerBar                                    _powerbar;
+
+        DirectionMap                                _directionMap;
+        DIRECTION                                   _currentPlayerDirection;
+        bool                                        _playerIsMoving{false};
+
+        std::vector<std::shared_ptr<Newspaper>>     _newspaperVector;
+
+        bool                                        _leftMouseButtonHold{false};
 };
 
 #endif // GAME_HPP
