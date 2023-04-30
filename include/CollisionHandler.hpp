@@ -1,6 +1,8 @@
 #ifndef COLLISION_HANDLER_HPP
 #define COLLISION_HANDLER_HPP
 
+#include <list>
+
 #include "Definitions.hpp"
 
 #include "NewspaperContainer.hpp"
@@ -12,7 +14,7 @@ class CollisionHandler
         CollisionHandler(NewspaperContainer& /*newspaper container*/, TargetContainer& /*target container*/);
         ~CollisionHandler(){};
 
-        void checkForCollisions();
+        void checkForCollisions(std::list<bool>& /*list of new landed/unlanded papers*/);
 
     private:
         NewspaperContainer&     _newspaperContainer;

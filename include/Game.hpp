@@ -1,9 +1,10 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "Definitions.hpp"
 #include <vector>
+#include <list>
 
+#include "Definitions.hpp"
 #include "Player.hpp"
 #include "PowerBar.hpp"
 #include "NewspaperContainer.hpp"
@@ -24,6 +25,7 @@ class Game : private sf::NonCopyable
 
         void                    handlePlayerKeyboardInput(sf::Keyboard::Key /*key code*/, bool /*pressed or release*/);
         void                    handlePlayerMouseInput(sf::Mouse::Button /*button code*/, bool /*pressed or release*/);
+        void                    handleScoreList();
 
         static const sf::Time                       TimePerFrame;
 
@@ -40,6 +42,8 @@ class Game : private sf::NonCopyable
         CollisionHandler                            _collisionHandler;
 
         HUD                                         _hud;
+        unsigned int                                _playerScore;
+        std::list<bool>                             _paperLandedList;
 
         float                                       _timeSinceLastTargetSpawn;
 

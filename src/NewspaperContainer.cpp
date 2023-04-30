@@ -24,7 +24,10 @@ void NewspaperContainer::spawnNewspaper(sf::Vector2f startPos, sf::Vector2f dirV
 void NewspaperContainer::update(sf::Time elapsedTime)
 {
     for (auto paper : _newspaperContainer)
-        paper.second->move(elapsedTime);
+    {   
+        if (!paper.second->hasLanded())
+            paper.second->move(elapsedTime);
+    }
 }
 
 void NewspaperContainer::removeOutOfSightTarget(sf::Vector2u windowSize)

@@ -3,14 +3,16 @@
 Newspaper::Newspaper()
 : _velocity(START_VELOCITY)
 , _rotationSpeed(20)
+, _markForScoreCount(false)
 {
     _newspaper.setSize(sf::Vector2f(100,30));
-    _newspaper.setOrigin(sf::Vector2f(0,15));
+    
     _newspaper.setFillColor(sf::Color::Blue);
 }
 
 void Newspaper::startFlying(sf::Vector2f startPosition, sf::Vector2f dirVec , float angle)
 {
+    _newspaper.setOrigin(sf::Vector2f(50,15));
     _newspaper.setPosition(startPosition);
     _newspaper.setRotation(angle - 90);
     _directionVector = -dirVec;
@@ -27,8 +29,10 @@ void Newspaper::move(sf::Time elapsedTime)
         _newspaper.rotate(_rotationSpeed);
         _velocity -= VELOCITY_DEGRADATION;
     }
-    else{
-        // _newspaper.setRotation(0);
+    
+    if (hasLanded())
+    {
+        _markForScoreCount = true;
     }
 }
 
@@ -64,4 +68,20 @@ void Newspaper::setLandedOnTarget(bool landed)
     {
         _newspaper.setFillColor(sf::Color::Red);
     }
+}
+
+bool Newspaper::isMarkedForScore()
+{
+    return _markForScoreCount;
+}
+
+bool Newspaper::hasLandedOnTarget()
+{
+    return _landedOnTarget;
+}
+
+bool Newspaper::getScoreValue()
+{
+    _markForScoreCount = false;
+    return _landedOnTarget;
 }

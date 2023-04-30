@@ -31,4 +31,8 @@ typedef std::map<DIRECTION, sf::Vector2f> DirectionMap;
 
 #define TARGET_SPAWN_TIME 2
 
+// Score defines
+#define TARGET_HIT  20
+#define TARGET_MISS 5
+
 #endif // DEFINITIONS_HPP

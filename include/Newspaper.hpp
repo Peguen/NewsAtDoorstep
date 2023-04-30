@@ -16,6 +16,9 @@ class Newspaper
         sf::Vector2f        getPosition();
         bool                hasLanded();
         void                setLandedOnTarget(bool /*target landed indicator*/);
+        bool                hasLandedOnTarget();
+        bool                isMarkedForScore();
+        bool                getScoreValue();
 
         sf::FloatRect       getGlobalBounds();
 
@@ -25,6 +28,7 @@ class Newspaper
         bool                _landedOnTarget;
         float               _velocity;
         float               _rotationSpeed;
+        bool                _markForScoreCount;
 };
 
 #endif // NEWSPAPER_HPP
