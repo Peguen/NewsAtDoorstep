@@ -2,22 +2,27 @@
 
 Target::Target()
 {
-    _circle.setFillColor(sf::Color::Green);
-    _circle.setRadius(50);
+    _target.setFillColor(sf::Color::Green);
+    _target.setSize(sf::Vector2f(100,100));
 }
 
 void Target::spawn(sf::Vector2f spawnPos)
 {
-    _circle.setPosition(spawnPos);
+    _target.setPosition(spawnPos);
 }
 
 void Target::drawTarget(sf::RenderWindow& window)
 {
-    _circle.move(sf::Vector2f(0, SCROLLING_SPEED));
-    window.draw(_circle);
+    _target.move(sf::Vector2f(0, SCROLLING_SPEED));
+    window.draw(_target);
 }
 
 sf::Vector2f Target::getPosition()
 {
-    return _circle.getPosition();
+    return _target.getPosition();
+}
+
+sf::FloatRect Target::getGlobalBounds()
+{
+    return _target.getGlobalBounds();
 }

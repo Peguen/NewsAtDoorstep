@@ -14,6 +14,8 @@ class NewspaperContainer
         void drawNewspaper(sf::RenderWindow& /*render window*/);
         void update(sf::Time /*elapsed time*/);
 
+        std::map<unsigned int, std::shared_ptr<Newspaper>>& getContainerRef();
+
     private:
         void removeOutOfSightTarget(sf::Vector2u /*window size*/);
 

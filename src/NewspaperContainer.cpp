@@ -41,3 +41,8 @@ void NewspaperContainer::removeOutOfSightTarget(sf::Vector2u windowSize)
             ++it;
     }
 }
+
+std::map<unsigned int, std::shared_ptr<Newspaper>>& NewspaperContainer::getContainerRef()
+{
+    return _newspaperContainer;
+}

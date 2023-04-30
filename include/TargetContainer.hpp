@@ -14,6 +14,9 @@ class TargetContainer
         void    spawnTarget();
 
         void    drawTargets(sf::RenderWindow& /*render window*/);
+        bool    intersects(sf::FloatRect /*bounding rectangle*/);
+
+        std::map<unsigned int, std::shared_ptr<Target>>& getContainerRef();
         
     private:
         void    removeOutOfSightTarget(unsigned int /*window size y*/);

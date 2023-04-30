@@ -8,6 +8,7 @@
 #include "PowerBar.hpp"
 #include "NewspaperContainer.hpp"
 #include "TargetContainer.hpp"
+#include "CollisionHandler.hpp"
 
 class Game : private sf::NonCopyable
 {
@@ -35,6 +36,7 @@ class Game : private sf::NonCopyable
 
         NewspaperContainer                          _newspaperContainer;
         TargetContainer                             _targetContainer;
+        CollisionHandler                            _collisionHandler;
 
         float                                       _timeSinceLastTargetSpawn;
 

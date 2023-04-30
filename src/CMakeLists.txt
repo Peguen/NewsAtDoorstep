@@ -7,6 +7,7 @@ set(SRC_FILES
     Target.cpp
     TargetContainer.cpp
     NewspaperContainer.cpp
+    CollisionHandler.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})

@@ -12,9 +12,11 @@ class CollisionHandler
         CollisionHandler(NewspaperContainer& /*newspaper container*/, TargetContainer& /*target container*/);
         ~CollisionHandler(){};
 
+        void checkForCollisions();
+
     private:
-        NewspaperContainer*     _newspaperContainer;
-        TargetContainer*        _targetContainer;
+        NewspaperContainer&     _newspaperContainer;
+        TargetContainer&        _targetContainer;
 };
 
 #endif  // COLLISION_HANDLER_HPP

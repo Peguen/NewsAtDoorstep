@@ -4,6 +4,7 @@ TargetContainer::TargetContainer()
 : _xLowerBound(0)
 , _xUpperBound(0)
 , _spawnLeft(true)
+, _targetCounter(0)
 {
 
 }
@@ -36,8 +37,9 @@ void TargetContainer::setBoundaries(unsigned int xLower, unsigned int xUpper, un
 void TargetContainer::drawTargets(sf::RenderWindow& window)
 {
     removeOutOfSightTarget(window.getSize().y);
-    for (auto target : _targetContainer)
+    for (auto target : _targetContainer){
         target.second->drawTarget(window);
+    }
 }
 
 void TargetContainer::removeOutOfSightTarget(unsigned int windowY)
@@ -51,4 +53,19 @@ void TargetContainer::removeOutOfSightTarget(unsigned int windowY)
         else
             ++it;
     }
+}
+
+bool TargetContainer::intersects(sf::FloatRect globalBoundsOfPaper)
+{
+    for (auto target : _targetContainer)
+    {
+        if(target.second->getGlobalBounds().intersects(globalBoundsOfPaper))
+            return true;
+    }
+    return false;
+}
+
+std::map<unsigned int, std::shared_ptr<Target>>& TargetContainer::getContainerRef()
+{
+    return _targetContainer;
 }
