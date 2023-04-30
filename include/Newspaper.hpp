@@ -10,16 +10,16 @@ class Newspaper
         ~Newspaper() {};
 
         void                drawNewspaper(sf::RenderWindow& /*target window*/);
-        void                startFlying(sf::Vector2f /*start position*/, sf::Vector2f /*direction vector*/, float /*angle*/, sf::Vector2u /*window size*/);
+        void                startFlying(sf::Vector2f /*start position*/, sf::Vector2f /*direction vector*/, float /*angle*/);
         void                move(sf::Time /*elapsed time*/);
 
-        bool                removePaper();
+        sf::Vector2f        getPosition();
+        bool                isFlying();
 
     private:
         sf::RectangleShape  _newspaper;
         sf::Vector2f        _directionVector;
-        sf::Vector2u        _windowSize;
-        float               _velocity{START_VELOCITY};
+        float               _velocity;
 };
 
 #endif // NEWSPAPER_HPP
