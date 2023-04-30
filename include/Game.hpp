@@ -15,6 +15,11 @@
 class Game : private sf::NonCopyable
 {
     public:
+        enum STATE
+        {
+            RUNNING,
+            GAMEOVER
+        };
                                 Game();
         void                    run();
 
@@ -26,16 +31,13 @@ class Game : private sf::NonCopyable
         void                    handlePlayerKeyboardInput(sf::Keyboard::Key /*key code*/, bool /*pressed or release*/);
         void                    handlePlayerMouseInput(sf::Mouse::Button /*button code*/, bool /*pressed or release*/);
         void                    handleScoreList();
+        void                    reset();
 
         static const sf::Time                       TimePerFrame;
 
         sf::RenderWindow                            _window;
         Player                                      _player;
         PowerBar                                    _powerbar;
-
-        DirectionMap                                _directionMap;
-        DIRECTION                                   _currentPlayerDirection;
-        bool                                        _playerIsMoving{false};
 
         NewspaperContainer                          _newspaperContainer;
         TargetContainer                             _targetContainer;
@@ -47,7 +49,8 @@ class Game : private sf::NonCopyable
 
         float                                       _timeSinceLastTargetSpawn;
 
-        bool                                        _leftMouseButtonHold{false};
+        bool                                        _leftMouseButtonHold;
+        STATE                                       _gameState;
 };
 
 #endif // GAME_HPP

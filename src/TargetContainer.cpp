@@ -5,6 +5,7 @@ TargetContainer::TargetContainer()
 , _xUpperBound(0)
 , _spawnLeft(true)
 , _targetCounter(0)
+, _notDeliveredCount(0)
 {
 
 }
@@ -48,6 +49,8 @@ void TargetContainer::removeOutOfSightTarget(unsigned int windowY)
     {
         if ( it->second->getPosition().y > (windowY + REMOVAL_OFFSET))
             {
+                if(!it->second->isDelivered())
+                    _notDeliveredCount++;
                 it = _targetContainer.erase(it);
             }
         else
@@ -60,7 +63,10 @@ bool TargetContainer::intersects(sf::FloatRect globalBoundsOfPaper)
     for (auto target : _targetContainer)
     {
         if(target.second->getGlobalBounds().intersects(globalBoundsOfPaper))
+        {   
+            target.second->setDelivered();
             return true;
+        }
     }
     return false;
 }
@@ -68,4 +74,16 @@ bool TargetContainer::intersects(sf::FloatRect globalBoundsOfPaper)
 std::map<unsigned int, std::shared_ptr<Target>>& TargetContainer::getContainerRef()
 {
     return _targetContainer;
+}
+
+unsigned int TargetContainer::getNotDeliveredCount()
+{
+    return _notDeliveredCount;
+}
+
+void TargetContainer::reset()
+{
+    _notDeliveredCount = 0;
+    _targetCounter = 0;
+    _targetContainer.clear();
 }

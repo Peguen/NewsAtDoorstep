@@ -1,7 +1,6 @@
 #ifndef DEFINITIONS_HPP
 #define DEFINITIONS_HPP
 
-#include <map>
 #include <SFML/Graphics.hpp>
 
 // Player
@@ -24,8 +23,6 @@ enum DIRECTION
     RIGHT
 };
 
-typedef std::map<DIRECTION, sf::Vector2f> DirectionMap;
-
 #define SCROLLING_SPEED 2.5f
 #define REMOVAL_OFFSET 100
 
@@ -34,5 +31,6 @@ typedef std::map<DIRECTION, sf::Vector2f> DirectionMap;
 // Score defines
 #define TARGET_HIT  20
 #define TARGET_MISS 5
+#define MAX_MISS_DELIVERY 5
 
 #endif // DEFINITIONS_HPP

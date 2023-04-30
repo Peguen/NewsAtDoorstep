@@ -10,11 +10,13 @@ class TargetContainer
         TargetContainer();
         ~TargetContainer() {};
 
-        void    setBoundaries(unsigned int	/*x lower*/, unsigned int /*x upper*/, unsigned int /*x max*/);
-        void    spawnTarget();
+        void            setBoundaries(unsigned int	/*x lower*/, unsigned int /*x upper*/, unsigned int /*x max*/);
+        void            spawnTarget();
 
-        void    drawTargets(sf::RenderWindow& /*render window*/);
-        bool    intersects(sf::FloatRect /*bounding rectangle*/);
+        void            drawTargets(sf::RenderWindow& /*render window*/);
+        bool            intersects(sf::FloatRect /*bounding rectangle*/);
+        unsigned int    getNotDeliveredCount();
+        void            reset();
 
         std::map<unsigned int, std::shared_ptr<Target>>& getContainerRef();
         
@@ -29,6 +31,7 @@ class TargetContainer
         unsigned int                                        _xUpperBound;
         unsigned int                                        _xMax;
         bool                                                _spawnLeft;
+        unsigned int                                        _notDeliveredCount;
 };
 
 #endif // TARGET_CONTAINER_HPP
