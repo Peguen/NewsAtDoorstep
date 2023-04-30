@@ -8,6 +8,7 @@ Game::Game()
 : _window(sf::VideoMode(1920,1080), "Hello SFML!", sf::Style::Close)
 , _timeSinceLastTargetSpawn(0.0f)
 , _collisionHandler(_newspaperContainer, _targetContainer)
+, _hud(_window.getSize())
 {
     _window.setFramerateLimit(60);
 
@@ -83,6 +84,7 @@ void Game::update(sf::Time elapsedTime)
         _powerbar.setEndPoint(sf::Vector2f(currentMousePos));
     }
 
+    _hud.setScore(std::to_string(elapsedTime.asMicroseconds()));
     _newspaperContainer.update(elapsedTime);
 
     if (_playerIsMoving)
@@ -111,6 +113,7 @@ void Game::render()
         _powerbar.drawPowerBar(_window);	
 	
     _player.drawPlayer(_window);
+    _hud.drawHUD(_window);
 
     _window.display();
 }
