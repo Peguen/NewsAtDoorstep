@@ -8,6 +8,11 @@ HUD::HUD(sf::Vector2u windowSize)
     _scoreText.setPosition(windowSize.x/2 - 100, 10.f);
     _scoreText.setCharacterSize(50u);
     _scoreText.setFillColor(sf::Color::White);
+
+    _deliveryFailed.setFont(_fontHolder.get(Fonts::Main));
+    _deliveryFailed.setPosition(windowSize.x/2 - 100, 70.f);
+    _deliveryFailed.setCharacterSize(50u);
+    _deliveryFailed.setFillColor(sf::Color::White);
 }
 
 void HUD::loadFonts()
@@ -23,5 +28,11 @@ void HUD::setScore(std::string score)
 void HUD::drawHUD(sf::RenderWindow& window)
 {
     window.draw(_scoreText);
+    window.draw(_deliveryFailed);
+}
+
+void HUD::setMissedDelivery(unsigned int missedDelivery)
+{
+    _deliveryFailed.setString("Houses left: " + std::to_string(missedDelivery));
 }
 

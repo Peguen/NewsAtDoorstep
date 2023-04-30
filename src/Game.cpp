@@ -101,6 +101,7 @@ void Game::update(sf::Time elapsedTime)
     _collisionHandler.checkForCollisions(_paperLandedList);
     handleScoreList();
     _hud.setScore(std::to_string(_playerScore));
+    _hud.setMissedDelivery(MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount());
 }
 
 void Game::render()
