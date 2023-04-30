@@ -4,6 +4,8 @@ HUD::HUD(sf::Vector2u windowSize)
 {
     loadFonts();
 
+    _gameOverScreen.init(_fontHolder, windowSize);
+
     _scoreText.setFont(_fontHolder.get(Fonts::Main));
     _scoreText.setPosition(windowSize.x/2 - 100, 10.f);
     _scoreText.setCharacterSize(50u);
@@ -36,3 +38,8 @@ void HUD::setMissedDelivery(unsigned int missedDelivery)
     _deliveryFailed.setString("Houses left: " + std::to_string(missedDelivery));
 }
 
+void HUD::drawGameOverScreen(sf::RenderWindow& window)
+{
+   _gameOverScreen.setFinalScore(_scoreText.getString());
+   _gameOverScreen.drawGameOverScreen(window);
+}

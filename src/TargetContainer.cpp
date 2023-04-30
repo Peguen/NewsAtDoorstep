@@ -80,3 +80,10 @@ unsigned int TargetContainer::getNotDeliveredCount()
 {
     return _notDeliveredCount;
 }
+
+void TargetContainer::reset()
+{
+    _notDeliveredCount = 0;
+    _targetCounter = 0;
+    _targetContainer.clear();
+}

@@ -49,3 +49,9 @@ std::map<unsigned int, std::shared_ptr<Newspaper>>& NewspaperContainer::getConta
 {
     return _newspaperContainer;
 }
+
+void NewspaperContainer::reset()
+{
+    _newspaperContainer.clear();
+    _paperCounter = 0;
+}

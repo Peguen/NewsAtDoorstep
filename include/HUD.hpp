@@ -4,6 +4,7 @@
 #include "Definitions.hpp"
 #include "ResourceHolder.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "GameOverScreen.hpp"
 
 class HUD
 {
@@ -15,11 +16,14 @@ class HUD
         void setScore(std::string /*score string*/);
         void setMissedDelivery(unsigned int /*missed delivery*/);
 
+        void drawGameOverScreen(sf::RenderWindow& /*window to render*/);
+
     private:
         void loadFonts();
         FontHolder      _fontHolder;
         sf::Text        _scoreText;
         sf::Text        _deliveryFailed;
+        GameOverScreen  _gameOverScreen;
 };
 
 #endif // HUD_HPP

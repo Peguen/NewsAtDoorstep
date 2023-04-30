@@ -16,6 +16,7 @@ class TargetContainer
         void            drawTargets(sf::RenderWindow& /*render window*/);
         bool            intersects(sf::FloatRect /*bounding rectangle*/);
         unsigned int    getNotDeliveredCount();
+        void            reset();
 
         std::map<unsigned int, std::shared_ptr<Target>>& getContainerRef();
         

@@ -13,6 +13,7 @@ class NewspaperContainer
         void spawnNewspaper(sf::Vector2f /*start position*/, sf::Vector2f /*direction vector*/, float /*angle*/);
         void drawNewspaper(sf::RenderWindow& /*render window*/);
         void update(sf::Time /*elapsed time*/);
+        void reset();
 
         std::map<unsigned int, std::shared_ptr<Newspaper>>& getContainerRef();
 

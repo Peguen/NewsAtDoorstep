@@ -1,7 +1,6 @@
 #ifndef DEFINITIONS_HPP
 #define DEFINITIONS_HPP
 
-#include <map>
 #include <SFML/Graphics.hpp>
 
 // Player
@@ -23,8 +22,6 @@ enum DIRECTION
     LEFT,
     RIGHT
 };
-
-typedef std::map<DIRECTION, sf::Vector2f> DirectionMap;
 
 #define SCROLLING_SPEED 2.5f
 #define REMOVAL_OFFSET 100

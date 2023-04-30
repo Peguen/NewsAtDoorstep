@@ -10,16 +10,13 @@ Game::Game()
 , _collisionHandler(_newspaperContainer, _targetContainer)
 , _hud(_window.getSize())
 , _playerScore(0)
+, _gameState(STATE::RUNNING)
+, _leftMouseButtonHold(false)
 {
     _window.setFramerateLimit(60);
 
     // set player start position
     _player.setPosition(sf::Vector2f(_window.getSize().x / 2, _window.getSize().y - _player.getSize().y));
-
-    _directionMap[DIRECTION::UP] = sf::Vector2f(0,-1);
-    _directionMap[DIRECTION::DOWN] = sf::Vector2f(0,1);
-    _directionMap[DIRECTION::LEFT] = sf::Vector2f(-1,0);
-    _directionMap[DIRECTION::RIGHT] = sf::Vector2f(1,0);
 
     // TODO: Update when street boundaries are there
     _targetContainer.setBoundaries(710, 1210, _window.getSize().x);
@@ -79,44 +76,70 @@ void Game::processEvents()
 
 void Game::update(sf::Time elapsedTime)
 {
-    if (_leftMouseButtonHold)
+    if (MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount() <= 0)
+        _gameState = STATE::GAMEOVER;
+
+    switch (_gameState)
     {
-        auto currentMousePos = sf::Mouse::getPosition(_window);
-        _powerbar.setEndPoint(sf::Vector2f(currentMousePos));
-    }
+        case STATE::RUNNING:
+        {
+            if (_leftMouseButtonHold)
+            {
+                auto currentMousePos = sf::Mouse::getPosition(_window);
+                _powerbar.setEndPoint(sf::Vector2f(currentMousePos));
+            }
 
-    _newspaperContainer.update(elapsedTime);
+            _newspaperContainer.update(elapsedTime);
+            
+            // target handling
+            _timeSinceLastTargetSpawn += elapsedTime.asMicroseconds()/1000000.0f;
+            if (_timeSinceLastTargetSpawn >= TARGET_SPAWN_TIME)
+            {    
+                _targetContainer.spawnTarget();
+                _timeSinceLastTargetSpawn = 0;
+            }
 
-    if (_playerIsMoving)
-        _player.move(_directionMap[_currentPlayerDirection]);
+            _collisionHandler.checkForCollisions(_paperLandedList);
+            handleScoreList();
+            _hud.setScore(std::to_string(_playerScore));
+            _hud.setMissedDelivery(MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount());
+            break;
+        }
+        
+        default:
+            break;
+    } 
     
-    // target handling
-    _timeSinceLastTargetSpawn += elapsedTime.asMicroseconds()/1000000.0f;
-    if (_timeSinceLastTargetSpawn >= TARGET_SPAWN_TIME)
-    {    
-        _targetContainer.spawnTarget();
-        _timeSinceLastTargetSpawn = 0;
-    }
-
-    _collisionHandler.checkForCollisions(_paperLandedList);
-    handleScoreList();
-    _hud.setScore(std::to_string(_playerScore));
-    _hud.setMissedDelivery(MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount());
 }
 
 void Game::render()
 {
     _window.clear();
 
-    _targetContainer.drawTargets(_window);
+    switch (_gameState)
+    {
+        case STATE::RUNNING:
+        {
+            _targetContainer.drawTargets(_window);
 
-    _newspaperContainer.drawNewspaper(_window);
+            _newspaperContainer.drawNewspaper(_window);
 
-    if(_leftMouseButtonHold)
-        _powerbar.drawPowerBar(_window);	
-	
-    _player.drawPlayer(_window);
-    _hud.drawHUD(_window);
+            if(_leftMouseButtonHold)
+                _powerbar.drawPowerBar(_window);	
+            
+            _player.drawPlayer(_window);
+            _hud.drawHUD(_window);
+            break;
+        }
+
+        case STATE::GAMEOVER:
+            _hud.drawGameOverScreen(_window);
+            break;
+
+        default:
+            break;
+    }
+    
 
     _window.display();
 }
@@ -127,36 +150,10 @@ void Game::handlePlayerKeyboardInput(sf::Keyboard::Key key, bool isPressed)
     {
         switch (key)
         {
-            case sf::Keyboard::A:
-            {
-                _currentPlayerDirection = DIRECTION::LEFT;
-                _playerIsMoving = true;
+            case sf::Keyboard::R:
+                reset();
                 break;
-            }
-            case sf::Keyboard::D:
-            {
-                _currentPlayerDirection = DIRECTION::RIGHT;
-                _playerIsMoving = true;
-                break;
-            }
-            default:
-                break;
-        }
-    }
-    else
-    {
-        switch (key)
-        {
-            case sf::Keyboard::A:
-            {
-                _playerIsMoving = false;
-                break;
-            }
-            case sf::Keyboard::D:
-            {
-                _playerIsMoving = false;
-                break;
-            }
+
             default:
                 break;
         }
@@ -215,4 +212,13 @@ void Game::handleScoreList()
             _playerScore -= TARGET_MISS;
         }
     }
+}
+
+void Game::reset()
+{
+    _gameState = STATE::RUNNING;
+    _targetContainer.reset();
+    _newspaperContainer.reset();
+    _timeSinceLastTargetSpawn = 0;
+    _playerScore = 0;
 }
