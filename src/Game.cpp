@@ -82,6 +82,8 @@ void Game::update(sf::Time elapsedTime)
         _powerbar.setEndPoint(sf::Vector2f(currentMousePos));
     }
 
+    _newspaperContainer.update(elapsedTime);
+
     if (_playerIsMoving)
         _player.move(_directionMap[_currentPlayerDirection]);
     
@@ -92,18 +94,6 @@ void Game::update(sf::Time elapsedTime)
         _targetContainer.spawnTarget();
         _timeSinceLastTargetSpawn = 0;
     }
-
-    // newspaper handling
-    for (auto& paper : _newspaperVector)
-    {
-        paper->move(elapsedTime);
-    }
-    // Remove out of sight papers
-    auto it = remove_if(_newspaperVector.begin(), _newspaperVector.end(),
-    [](std::shared_ptr<Newspaper> paper){
-        return paper->removePaper();
-        });
-    _newspaperVector.erase(it, _newspaperVector.end());
 }
 
 void Game::render()
@@ -112,8 +102,7 @@ void Game::render()
 
     _targetContainer.drawTargets(_window);
 
-    for (auto& paper : _newspaperVector)
-        paper->drawNewspaper(_window);
+    _newspaperContainer.drawNewspaper(_window);
 
     if(_leftMouseButtonHold)
         _powerbar.drawPowerBar(_window);	
@@ -191,9 +180,7 @@ void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
         {
             case sf::Mouse::Button::Left:
             {
-                auto new_paper = std::make_shared<Newspaper>();
-                new_paper->startFlying(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle(), _window.getSize());
-                _newspaperVector.push_back(new_paper);
+                _newspaperContainer.spawnNewspaper(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle());
                 _leftMouseButtonHold = false;
                 break;
             }
