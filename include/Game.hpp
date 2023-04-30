@@ -7,6 +7,7 @@
 #include "Player.hpp"
 #include "PowerBar.hpp"
 #include "Newspaper.hpp"
+#include "TargetContainer.hpp"
 
 class Game : private sf::NonCopyable
 {
@@ -33,6 +34,9 @@ class Game : private sf::NonCopyable
         bool                                        _playerIsMoving{false};
 
         std::vector<std::shared_ptr<Newspaper>>     _newspaperVector;
+        TargetContainer                             _targetContainer;
+
+        float                                       _timeSinceLastTargetSpawn;
 
         bool                                        _leftMouseButtonHold{false};
 };

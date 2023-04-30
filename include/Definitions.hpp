@@ -29,4 +29,6 @@ typedef std::map<DIRECTION, sf::Vector2f> DirectionMap;
 #define SCROLLING_SPEED 2.5f
 #define REMOVAL_OFFSET 100
 
+#define TARGET_SPAWN_TIME 2
+
 #endif // DEFINITIONS_HPP
