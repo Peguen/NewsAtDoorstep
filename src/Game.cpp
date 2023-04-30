@@ -7,6 +7,7 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 Game::Game()
 : _window(sf::VideoMode(1920,1080), "Hello SFML!", sf::Style::Close)
 , _timeSinceLastTargetSpawn(0.0f)
+, _collisionHandler(_newspaperContainer, _targetContainer)
 {
     _window.setFramerateLimit(60);
 
@@ -94,6 +95,8 @@ void Game::update(sf::Time elapsedTime)
         _targetContainer.spawnTarget();
         _timeSinceLastTargetSpawn = 0;
     }
+
+    _collisionHandler.checkForCollisions();
 }
 
 void Game::render()

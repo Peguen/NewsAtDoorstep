@@ -13,9 +13,11 @@ class Target
         
         void            drawTarget(sf::RenderWindow& /*target window*/);
         sf::Vector2f    getPosition();
+        sf::FloatRect   getGlobalBounds();
 
     private:
-        sf::CircleShape  _circle;
+        sf::RectangleShape  _target;
+        sf::RectangleShape  _targetOverlapp;
 };
 
 #endif // TARGET_HPP
