@@ -9,6 +9,7 @@ Game::Game()
 , _timeSinceLastTargetSpawn(0.0f)
 , _collisionHandler(_newspaperContainer, _targetContainer)
 , _hud(_window.getSize())
+, _playerScore(0)
 {
     _window.setFramerateLimit(60);
 
@@ -84,7 +85,6 @@ void Game::update(sf::Time elapsedTime)
         _powerbar.setEndPoint(sf::Vector2f(currentMousePos));
     }
 
-    _hud.setScore(std::to_string(elapsedTime.asMicroseconds()));
     _newspaperContainer.update(elapsedTime);
 
     if (_playerIsMoving)
@@ -98,7 +98,9 @@ void Game::update(sf::Time elapsedTime)
         _timeSinceLastTargetSpawn = 0;
     }
 
-    _collisionHandler.checkForCollisions();
+    _collisionHandler.checkForCollisions(_paperLandedList);
+    handleScoreList();
+    _hud.setScore(std::to_string(_playerScore));
 }
 
 void Game::render()
@@ -195,6 +197,21 @@ void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
                 break;
             default:
                 break;
+        }
+    }
+}
+
+void Game::handleScoreList()
+{
+    for (auto landed : _paperLandedList)
+    {
+        if(landed)
+        {
+            _playerScore += TARGET_HIT;
+        }
+        else if (_playerScore >= TARGET_MISS) 
+        {
+            _playerScore -= TARGET_MISS;
         }
     }
 }
