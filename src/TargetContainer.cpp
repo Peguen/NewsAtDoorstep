@@ -23,7 +23,7 @@ void TargetContainer::spawnTarget()
     }
     auto newTarget = std::make_shared<Target>();
     newTarget->spawn(spawnPosition);
-    _targetContainer.push_back(newTarget);
+    _targetContainer[_targetCounter++] = newTarget;
 }
 
 void TargetContainer::setBoundaries(unsigned int xLower, unsigned int xUpper, unsigned int xMax)
@@ -37,14 +37,18 @@ void TargetContainer::drawTargets(sf::RenderWindow& window)
 {
     removeOutOfSightTarget(window.getSize().y);
     for (auto target : _targetContainer)
-        target->drawTarget(window);
+        target.second->drawTarget(window);
 }
 
 void TargetContainer::removeOutOfSightTarget(unsigned int windowY)
 {
-    auto it = remove_if(_targetContainer.begin(), _targetContainer.end(),
-    [windowY](std::shared_ptr<Target> target){
-        return target->getPosition().y > windowY;
-    });
-    _targetContainer.erase(it, _targetContainer.end());
+    for (auto it = _targetContainer.begin(); it != _targetContainer.end(); )
+    {
+        if ( it->second->getPosition().y > (windowY + REMOVAL_OFFSET))
+            {
+                it = _targetContainer.erase(it);
+            }
+        else
+            ++it;
+    }
 }

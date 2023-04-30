@@ -18,11 +18,14 @@ class TargetContainer
     private:
         void    removeOutOfSightTarget(unsigned int /*window size y*/);
 
-        std::vector<std::shared_ptr<Target>>    _targetContainer;
-        unsigned int                            _xLowerBound;
-        unsigned int                            _xUpperBound;
-        unsigned int                            _xMax;
-        bool                                    _spawnLeft;
+        std::map<unsigned int, std::shared_ptr<Target>>     _targetContainer;
+        // using increasing unsigned int for now
+        unsigned int                                        _targetCounter;
+        
+        unsigned int                                        _xLowerBound;
+        unsigned int                                        _xUpperBound;
+        unsigned int                                        _xMax;
+        bool                                                _spawnLeft;
 };
 
 #endif // TARGET_CONTAINER_HPP
