@@ -8,6 +8,8 @@ set(SRC_FILES
     TargetContainer.cpp
     NewspaperContainer.cpp
     CollisionHandler.cpp
+    ../include/ResourceHolder.hpp
+    HUD.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})
@@ -34,3 +36,9 @@ if (WIN32 AND BUILD_SHARED_LIBS)
 endif()
 
 install(TARGETS ${PROJECT_NAME})
+
+add_custom_target(copy_resources ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/resources
+        $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources
+        COMMENT "Copying resources into binary directory")
