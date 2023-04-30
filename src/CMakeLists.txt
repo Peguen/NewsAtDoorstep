@@ -4,6 +4,8 @@ set(SRC_FILES
     Player.cpp
     PowerBar.cpp
     Newspaper.cpp
+    Target.cpp
+    TargetContainer.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})

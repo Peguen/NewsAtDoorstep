@@ -6,6 +6,7 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
 Game::Game()
 : _window(sf::VideoMode(1920,1080), "Hello SFML!", sf::Style::Close)
+, _timeSinceLastTargetSpawn(0.0f)
 {
     _window.setFramerateLimit(60);
 
@@ -16,6 +17,9 @@ Game::Game()
     _directionMap[DIRECTION::DOWN] = sf::Vector2f(0,1);
     _directionMap[DIRECTION::LEFT] = sf::Vector2f(-1,0);
     _directionMap[DIRECTION::RIGHT] = sf::Vector2f(1,0);
+
+    // TODO: Update when street boundaries are there
+    _targetContainer.setBoundaries(710, 1210, _window.getSize().x);
 }
 
 void Game::run() 
@@ -78,36 +82,44 @@ void Game::update(sf::Time elapsedTime)
         _powerbar.setEndPoint(sf::Vector2f(currentMousePos));
     }
 
-    // removeOutOfScreenEntities();
-
     if (_playerIsMoving)
         _player.move(_directionMap[_currentPlayerDirection]);
+    
+    // target handling
+    _timeSinceLastTargetSpawn += elapsedTime.asMicroseconds()/1000000.0f;
+    if (_timeSinceLastTargetSpawn >= TARGET_SPAWN_TIME)
+    {    
+        _targetContainer.spawnTarget();
+        _timeSinceLastTargetSpawn = 0;
+    }
 
+    // newspaper handling
     for (auto& paper : _newspaperVector)
     {
         paper->move(elapsedTime);
     }
+    // Remove out of sight papers
+    auto it = remove_if(_newspaperVector.begin(), _newspaperVector.end(),
+    [](std::shared_ptr<Newspaper> paper){
+        return paper->removePaper();
+        });
+    _newspaperVector.erase(it, _newspaperVector.end());
 }
 
 void Game::render()
 {
     _window.clear();
-    _player.drawPlayer(_window);
-    
-    if(_leftMouseButtonHold)
-        _powerbar.drawPowerBar(_window);	
-    
-    auto it = remove_if(_newspaperVector.begin(), _newspaperVector.end(),
-        [](std::shared_ptr<Newspaper> paper){
-            return paper->removePaper();
-          });
-    _newspaperVector.erase(it, _newspaperVector.end());
+
+    _targetContainer.drawTargets(_window);
 
     for (auto& paper : _newspaperVector)
-    {
         paper->drawNewspaper(_window);
-    }
+
+    if(_leftMouseButtonHold)
+        _powerbar.drawPowerBar(_window);	
 	
+    _player.drawPlayer(_window);
+
     _window.display();
 }
 
