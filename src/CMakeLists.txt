@@ -10,7 +10,6 @@ set(SRC_FILES
     CollisionHandler.cpp
     ../include/ResourceHolder.hpp
     HUD.cpp
-    GameOverScreen.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})

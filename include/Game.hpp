@@ -11,7 +11,6 @@
 #include "TargetContainer.hpp"
 #include "CollisionHandler.hpp"
 #include "HUD.hpp"
-#include "GameOverScreen.hpp"
 
 class Game : private sf::NonCopyable
 {

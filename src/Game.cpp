@@ -76,8 +76,12 @@ void Game::processEvents()
 
 void Game::update(sf::Time elapsedTime)
 {
-    if (MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount() <= 0)
+    if (   MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount() <= 0
+        && _gameState != STATE::GAMEOVER)
+    {
         _gameState = STATE::GAMEOVER;
+        _hud.prepareGameOver();
+    }
 
     switch (_gameState)
     {
@@ -101,7 +105,7 @@ void Game::update(sf::Time elapsedTime)
 
             _collisionHandler.checkForCollisions(_paperLandedList);
             handleScoreList();
-            _hud.setScore(std::to_string(_playerScore));
+            _hud.setScore(_playerScore);
             _hud.setMissedDelivery(MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount());
             break;
         }
