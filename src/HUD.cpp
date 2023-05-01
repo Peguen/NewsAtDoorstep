@@ -97,8 +97,8 @@ void HUD::setupHowToPlay()
     description += "\nControls:\n";
     description += "Left mouse button:\n\t1. click and hold \n\t2. drag for velocity and direction\n\t3. release to throw\n";
     description += "\nSpacebar: restart the game\n";
-    description += "ESC: pause the game\n";
-    description += "C: continue game\n";
+    description += "ESC: pause the game and show main menu\n";
+    description += "C: continue after pause\n";
     
     description += "\nQ: quit the game\n";
 
