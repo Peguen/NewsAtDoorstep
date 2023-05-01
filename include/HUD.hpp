@@ -20,6 +20,8 @@ class HUD
         void prepareGameOver();
         void drawGameOverScreen(sf::RenderWindow& /*window to render*/);
 
+        void drawPauseScreen(sf::RenderWindow& /*window to render*/);
+
     private:
         void loadFonts();
         sf::Vector2u    _windowSize;

@@ -4,6 +4,8 @@
 #include "Definitions.hpp"
 #include "Target.hpp"
 
+#include <cstdlib>
+
 class TargetContainer
 {
     public:

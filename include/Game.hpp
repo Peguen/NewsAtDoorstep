@@ -59,6 +59,9 @@ class Game : private sf::NonCopyable
         AudioHandler                                _audioHandler;
         TextureHolder                               _textureHolder;
         FloorHandler                                _floorHandler;
+
+        float                                       _spawnTime;
+        float                                       _playedTime;
 };
 
 #endif // GAME_HPP

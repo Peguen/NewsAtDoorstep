@@ -6,13 +6,15 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
 Game::Game()
 : _window(sf::VideoMode(1920,1080), "Hello SFML!", sf::Style::Close)
-, _timeSinceLastTargetSpawn(0.0f)
+, _timeSinceLastTargetSpawn(4.0f)
 , _collisionHandler(_newspaperContainer, _targetContainer)
 , _hud(_window.getSize())
 , _playerScore(0)
 , _gameState(STATE::RUNNING)
 , _leftMouseButtonHold(false)
 , _missedDelivery(0)
+, _playedTime(0)
+, _spawnTime(TARGET_SPAWN_TIME)
 {
     _window.setFramerateLimit(60);
 
@@ -94,6 +96,7 @@ void Game::update(sf::Time elapsedTime)
     {
         case STATE::RUNNING:
         {
+            _playedTime += elapsedTime.asMicroseconds()/1000000.0f;
             if (_leftMouseButtonHold)
             {
                 auto currentMousePos = sf::Mouse::getPosition(_window);
@@ -104,10 +107,15 @@ void Game::update(sf::Time elapsedTime)
             
             // target handling
             _timeSinceLastTargetSpawn += elapsedTime.asMicroseconds()/1000000.0f;
-            if (_timeSinceLastTargetSpawn >= TARGET_SPAWN_TIME)
+            if (_timeSinceLastTargetSpawn >= _spawnTime)
             {    
                 _targetContainer.spawnTarget();
                 _timeSinceLastTargetSpawn = 0;
+                if (_playedTime > 15 && _spawnTime >= 1)
+                {
+                    _spawnTime -= 0.5;
+                    _playedTime = 0;
+                }
             }
 
             _collisionHandler.checkForCollisions(_paperLandedList);
@@ -253,9 +261,12 @@ void Game::reset()
     _gameState = STATE::RUNNING;
     _targetContainer.reset();
     _newspaperContainer.reset();
-    _timeSinceLastTargetSpawn = 0;
+    _timeSinceLastTargetSpawn = 4;
     _playerScore = 0;
     _audioHandler.toggleMusic();
     _missedDelivery = 0;
     _player.reset();
+    _leftMouseButtonHold = false;
+    _spawnTime = TARGET_SPAWN_TIME;
+    _playedTime = 0;
 }

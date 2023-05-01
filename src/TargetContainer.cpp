@@ -18,13 +18,13 @@ void TargetContainer::spawnTarget()
     sf::Vector2f spawnPosition(0, -200);
     if (_spawnLeft)
     {
-        spawnPosition.x = _xLowerBound / 2;
+        spawnPosition.x = std::rand() % (_xLowerBound - 20);
         newTarget->spawn(spawnPosition, _spawnLeft, _leftHouseTexture);
         _spawnLeft = false;
     }
     else
     {
-        spawnPosition.x = (_xMax + _xUpperBound) / 2;  
+        spawnPosition.x = (std::rand() % (_xMax - _xUpperBound)) +  _xUpperBound;  
         newTarget->spawn(spawnPosition, _spawnLeft, _rightHouseTexture);  
         _spawnLeft = true;
     }

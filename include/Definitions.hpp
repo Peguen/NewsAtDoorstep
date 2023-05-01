@@ -26,7 +26,7 @@ enum DIRECTION
 #define SCROLLING_SPEED 2.5f
 #define REMOVAL_OFFSET 100
 
-#define TARGET_SPAWN_TIME 2
+#define TARGET_SPAWN_TIME 5
 
 // Score defines
 #define TARGET_HIT  20
