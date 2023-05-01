@@ -19,8 +19,7 @@ void CollisionHandler::checkForCollisions(std::list<bool>& landedList)
             else
                 newspaper.second->setLandedOnTarget(false); 
 
-            if (newspaper.second->isMarkedForScore())
-                landedList.push_back(newspaper.second->getScoreValue());
+            landedList.push_back(newspaper.second->getScoreValue());
         }
     }
 }
