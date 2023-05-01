@@ -3,8 +3,8 @@
 Target::Target()
 : _gotDelivered(false)
 {
-    _target.setSize(sf::Vector2f(20, 100));
-    _house.setSize(sf::Vector2f(128, 128)); 
+    _target.setSize(sf::Vector2f(220, 110));
+    _house.setSize(sf::Vector2f(461, 376)); 
 }
 
 void Target::spawn(sf::Vector2f spawnPos, bool left, const sf::Texture& texture)
@@ -12,9 +12,8 @@ void Target::spawn(sf::Vector2f spawnPos, bool left, const sf::Texture& texture)
     _isLeft = left;
 
     _house.setTexture(&texture);
-    _house.setScale(2, 2);
+
     _target.setPosition(spawnPos);
-    _target.setScale(2, 2);
 }
 
 void Target::drawTarget(sf::RenderWindow& window)
@@ -35,12 +34,12 @@ void Target::calculateHousePosition()
 
     if(_isLeft)
     {
-        newPos.x = targetPos.x - 200;
-        newPos.y = targetPos.y - 20;
+        newPos.x = targetPos.x - 235;
+        newPos.y = targetPos.y - 132;
     }
     else{
-        newPos.x = targetPos.x - 20;
-        newPos.y = targetPos.y - 20;
+        newPos.x = targetPos.x - 13;
+        newPos.y = targetPos.y - 132;
     }
     _house.setPosition(newPos);
 }

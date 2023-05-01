@@ -15,14 +15,6 @@
 #define BAR_OUTLINE_WIDTH 5
 
 // Logic defines
-enum DIRECTION
-{
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
-};
-
 #define SCROLLING_SPEED 2.5f
 #define REMOVAL_OFFSET 100
 

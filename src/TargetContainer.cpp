@@ -18,13 +18,14 @@ void TargetContainer::spawnTarget()
     sf::Vector2f spawnPosition(0, -200);
     if (_spawnLeft)
     {
-        spawnPosition.x = std::rand() % (_xLowerBound - 20);
+        spawnPosition.x = std::rand() % (_xLowerBound - 210);
         newTarget->spawn(spawnPosition, _spawnLeft, _leftHouseTexture);
         _spawnLeft = false;
     }
     else
     {
-        spawnPosition.x = (std::rand() % (_xMax - _xUpperBound)) +  _xUpperBound;  
+        // 375 -> so that the house is still a bit visible
+        spawnPosition.x = (std::rand() % (_xMax - 375 - _xUpperBound)) +  _xUpperBound;  
         newTarget->spawn(spawnPosition, _spawnLeft, _rightHouseTexture);  
         _spawnLeft = true;
     }

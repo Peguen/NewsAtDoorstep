@@ -8,10 +8,13 @@ HUD::HUD(sf::Vector2u windowSize)
     setText(_scoreText);
     setText(_deliveryFailed);
     setText(_highscore);
+    setText(_howToPlay);
 
-    _scoreText.setPosition(windowSize.x/2 - 100, 10.f);
-    _deliveryFailed.setPosition(windowSize.x/2 - 100, 70.f);
-    _highscore.setPosition(windowSize.x/3, windowSize.y/3);
+    setupHowToPlay();
+
+    _scoreText.setPosition(100, 10.f);
+    _deliveryFailed.setPosition(100, 70.f);
+    _highscore.setPosition(windowSize.x/3, windowSize.y/4);
     
     _newRecord.setFont(_fontHolder.get(Fonts::Main));
     _newRecord.setPosition(windowSize.x/3, windowSize.y - 100);
@@ -38,9 +41,14 @@ void HUD::drawHUD(sf::RenderWindow& window)
     window.draw(_deliveryFailed);
 }
 
+void HUD::drawPauseScreen(sf::RenderWindow& window)
+{
+    window.draw(_howToPlay);
+}
+
 void HUD::setMissedDelivery(unsigned int missedDelivery)
 {
-    _deliveryFailed.setString("Houses left: " + std::to_string(missedDelivery));
+    _deliveryFailed.setString("Houses: " + std::to_string(missedDelivery));
 }
 
 void HUD::prepareGameOver()
@@ -52,7 +60,7 @@ void HUD::prepareGameOver()
      _highscoreList.push_back(_score);
     std::sort(_highscoreList.begin(), _highscoreList.end(), std::greater<int>());  
 
-    std::string highscoreText = "Game Over!\n";
+    std::string highscoreText = "Game Over!\nYour last score was: " + std::to_string(_score) + "\n";
     unsigned int counter = 1;
     for (auto highscore : _highscoreList)
     {
@@ -60,6 +68,7 @@ void HUD::prepareGameOver()
         if (counter > 5)
             break;
     }
+    highscoreText += "\n\n\nPress Space to restart the game.";
     _highscore.setString(highscoreText);
 }
 
@@ -74,5 +83,29 @@ void HUD::setText(sf::Text& text)
 {
     text.setFont(_fontHolder.get(Fonts::Main));
     text.setFillColor(sf::Color::White);
-    text.setCharacterSize(20u);
+    text.setCharacterSize(50u);
+}
+
+void HUD::setupHowToPlay()
+{
+    std::string description = "Welcome to \"DirectMail\"\n";
+
+    description += "DirectMail is an endlessrunner game. You have to throw the mail to the doorsteps of the citizens. \n";
+    description += "You gain 20 points if the mail lands on houses footpath.\n";
+    description += "You lose 5 points if you miss.\n";
+    description += "You need to deliver houses. If 5 have no mail, the game is over.\n";
+    description += "\nControls:\n";
+    description += "Left mouse button:\n\t1. Click and hold \n\t2. Drag mouse for velocity and direction\n\t3. Release mouse button to throw\n";
+    description += "\nSpacebar: restart the game\n";
+    description += "ESC: pause the game\n";
+    description += "C: continue game\n";
+    
+    description += "\nQ: quit the game\n";
+
+    description += "\nM: toggle music\n";
+    description += "S: toggle sounds\n";
+
+    _howToPlay.setCharacterSize(30u);
+    _howToPlay.setPosition(50, 150);
+    _howToPlay.setString(description);
 }

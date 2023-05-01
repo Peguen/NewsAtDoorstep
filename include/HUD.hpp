@@ -36,6 +36,9 @@ class HUD
         sf::Text            _newRecord;
         std::vector<int>    _highscoreList;
         bool                _isNewRecord;
+
+        void setupHowToPlay();
+        sf::Text            _howToPlay;
 };
 
 #endif // HUD_HPP

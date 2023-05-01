@@ -20,7 +20,8 @@ class Game : private sf::NonCopyable
         enum STATE
         {
             RUNNING,
-            GAMEOVER
+            GAMEOVER,
+            PAUSE
         };
                                 Game();
         void                    run();
@@ -62,6 +63,9 @@ class Game : private sf::NonCopyable
 
         float                                       _spawnTime;
         float                                       _playedTime;
+
+        bool                                        _soundOn;
+        bool                                        _musicOn;
 };
 
 #endif // GAME_HPP
