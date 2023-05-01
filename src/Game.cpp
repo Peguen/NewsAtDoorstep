@@ -16,12 +16,21 @@ Game::Game()
 {
     _window.setFramerateLimit(60);
 
-    // set player start position
-    _player.setPosition(sf::Vector2f(_window.getSize().x / 2, _window.getSize().y - _player.getSize().y));
-
     // TODO: Update when street boundaries are there
     _targetContainer.setBoundaries(710, 1210, _window.getSize().x);
     _audioHandler.playMusic(Music::ID::Running, true);
+
+    // Texture stuff
+    _textureHolder.load(Textures::ID::Player, "./resources/images/Postman_sheet.png");
+    _textureHolder.load(Textures::ID::Newspaper, "./resources/images/Newspaper.png");
+    _textureHolder.load(Textures::ID::LeftHouse, "./resources/images/House_left.png");
+    _textureHolder.load(Textures::ID::RightHouse, "./resources/images/House_right.png");
+    _textureHolder.load(Textures::ID::Street, "./resources/images/Street.png");
+    _textureHolder.load(Textures::ID::Gras, "./resources/images/Gras.png");
+
+    // set player start position
+    _player.setPosition(sf::Vector2f(_window.getSize().x / 2, _window.getSize().y - _player.getSize().y - 50));
+    _player.setTexture(&_textureHolder.get(Textures::ID::Player));
 }
 
 void Game::run() 
@@ -121,8 +130,10 @@ void Game::update(sf::Time elapsedTime)
                 _missedDelivery = _targetContainer.getNotDeliveredCount();
                 _audioHandler.playSound(SoundEffect::ID::Oy);
             }
-
+            
             _hud.setMissedDelivery(MAX_MISS_DELIVERY - _missedDelivery);
+
+            _player.animate(elapsedTime);
             break;
         }
         
@@ -250,4 +261,5 @@ void Game::reset()
     _playerScore = 0;
     _audioHandler.toggleMusic();
     _missedDelivery = 0;
+    _player.reset();
 }

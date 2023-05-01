@@ -17,7 +17,10 @@ namespace Textures
 	{
 		Player,
 		Newspaper,
-		Targets,
+		LeftHouse,
+		RightHouse,
+		Street,
+		Gras
 	};
 }
 

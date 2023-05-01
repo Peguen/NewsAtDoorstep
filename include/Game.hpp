@@ -56,6 +56,7 @@ class Game : private sf::NonCopyable
         unsigned int                                _missedDelivery;
 
         AudioHandler                                _audioHandler;
+        TextureHolder                               _textureHolder;
 };
 
 #endif // GAME_HPP
