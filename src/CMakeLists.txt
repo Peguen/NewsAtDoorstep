@@ -44,3 +44,10 @@ add_custom_target(copy_resources ALL
         ${CMAKE_SOURCE_DIR}/resources
         $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources
         COMMENT "Copying resources into binary directory")
+
+if (MSVC)
+    message("Use VS MSVC")
+    set(CMAKE_INSTALL_SYSTEM_RUNTIME_LIPS_SKIP true)
+    include(InstallRequiredSystemLibraries)
+    file(COPY ${CMAKE_INSTALL_SYSTEM_RUNTIME_LIBS} DESTINATION ${CMAKE_BINARY_DIR}/src/Release/)
+endif()
