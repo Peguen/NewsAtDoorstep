@@ -88,14 +88,14 @@ void HUD::setText(sf::Text& text)
 
 void HUD::setupHowToPlay()
 {
-    std::string description = "Welcome to \"DirectMail\"\n";
+    std::string description = "Welcome to \"News @ Doorstep\"\n";
 
-    description += "DirectMail is an endlessrunner game. You have to throw the mail to the doorsteps of the citizens. \n";
-    description += "You gain 20 points if the mail lands on houses footpath.\n";
-    description += "You lose 5 points if you miss.\n";
-    description += "You need to deliver houses. If 5 have no mail, the game is over.\n";
+    description += "News @ Doorstep is an endlessrunner game. You have to throw the mail to the doorsteps of the houses. \n";
+    description += "20 points for delivering.\n";
+    description += "-5 points for a missed delivery.\n";
+    description += "Game will end when 5 houses do not receive the newspaper.\n";
     description += "\nControls:\n";
-    description += "Left mouse button:\n\t1. Click and hold \n\t2. Drag mouse for velocity and direction\n\t3. Release mouse button to throw\n";
+    description += "Left mouse button:\n\t1. click and hold \n\t2. drag for velocity and direction\n\t3. release to throw\n";
     description += "\nSpacebar: restart the game\n";
     description += "ESC: pause the game\n";
     description += "C: continue game\n";
