@@ -7,24 +7,28 @@ TargetContainer::TargetContainer()
 , _targetCounter(0)
 , _notDeliveredCount(0)
 {
-
+    // load the textures
+    _leftHouseTexture.loadFromFile("./resources/images/House_left.png");
+    _rightHouseTexture.loadFromFile("./resources/images/House_right.png");
 }
 
 void TargetContainer::spawnTarget()
 {
-    sf::Vector2f spawnPosition(0, 0);
+    auto newTarget = std::make_shared<Target>();
+    sf::Vector2f spawnPosition(0, -200);
     if (_spawnLeft)
     {
         spawnPosition.x = _xLowerBound / 2;
+        newTarget->spawn(spawnPosition, _spawnLeft, _leftHouseTexture);
         _spawnLeft = false;
     }
     else
     {
-        spawnPosition.x = (_xMax + _xUpperBound) / 2;    
+        spawnPosition.x = (_xMax + _xUpperBound) / 2;  
+        newTarget->spawn(spawnPosition, _spawnLeft, _rightHouseTexture);  
         _spawnLeft = true;
     }
-    auto newTarget = std::make_shared<Target>();
-    newTarget->spawn(spawnPosition, !_spawnLeft);
+
     _targetContainer[_targetCounter++] = newTarget;
 }
 

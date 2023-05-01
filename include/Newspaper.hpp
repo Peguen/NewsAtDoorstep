@@ -19,6 +19,7 @@ class Newspaper
         bool                hasLandedOnTarget();
         bool                isMarkedForScore();
         bool                getScoreValue();
+        void                setTexture(const sf::Texture& /*newspaper texture*/);
 
         sf::FloatRect       getGlobalBounds();
 

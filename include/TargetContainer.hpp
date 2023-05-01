@@ -32,6 +32,9 @@ class TargetContainer
         unsigned int                                        _xMax;
         bool                                                _spawnLeft;
         unsigned int                                        _notDeliveredCount;
+
+        sf::Texture                                         _leftHouseTexture;
+        sf::Texture                                         _rightHouseTexture;
 };
 
 #endif // TARGET_CONTAINER_HPP

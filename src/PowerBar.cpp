@@ -5,7 +5,8 @@
 
 PowerBar::PowerBar()
 {
-    _bar.setOutlineColor(sf::Color::Cyan);
+    _bar.setOutlineColor(sf::Color(35, 73, 117));
+    _bar.setFillColor(sf::Color(104, 174, 212));
     _bar.setOutlineThickness(BAR_OUTLINE_WIDTH);
 
     _bar.setOrigin(sf::Vector2f(BAR_WIDTH/2, 0));

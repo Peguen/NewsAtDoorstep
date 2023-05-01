@@ -9,7 +9,7 @@ class Target
         Target();
         ~Target() {};
 
-        void spawn(sf::Vector2f /*spawn position*/, bool /*if left*/);
+        void spawn(sf::Vector2f /*spawn position*/, bool /*if left*/, const sf::Texture& texture);
         
         void            drawTarget(sf::RenderWindow& /*target window*/);
         sf::Vector2f    getPosition();
@@ -22,7 +22,6 @@ class Target
         sf::RectangleShape  _house;
         bool                _gotDelivered;
 
-        sf::Texture         _houseTexture;
         bool                _isLeft;
 
         void calculateHousePosition();

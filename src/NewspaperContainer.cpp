@@ -3,7 +3,7 @@
 NewspaperContainer::NewspaperContainer()
 : _paperCounter(0)
 {
-
+    _paperTexture.loadFromFile("./resources/images/Newspaper.png");
 }
 
 void NewspaperContainer::drawNewspaper(sf::RenderWindow& window)
@@ -17,6 +17,7 @@ void NewspaperContainer::drawNewspaper(sf::RenderWindow& window)
 void NewspaperContainer::spawnNewspaper(sf::Vector2f startPos, sf::Vector2f dirVec, float angle)
 {
     auto newPaper = std::make_shared<Newspaper>();
+    newPaper->setTexture(_paperTexture);
     newPaper->startFlying(startPos, dirVec, angle);
     _newspaperContainer[_paperCounter++] = newPaper;
 }

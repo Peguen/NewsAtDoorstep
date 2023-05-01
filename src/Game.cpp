@@ -16,7 +16,7 @@ Game::Game()
 {
     _window.setFramerateLimit(60);
 
-    _targetContainer.setBoundaries(810, 110, _window.getSize().x);
+    _targetContainer.setBoundaries(810, 1100, _window.getSize().x);
     _audioHandler.playMusic(Music::ID::Running, true);
 
     // Texture stuff - will not use texture holder, concept does not work and time issue

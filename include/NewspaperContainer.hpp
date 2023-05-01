@@ -23,6 +23,8 @@ class NewspaperContainer
         std::map<unsigned int, std::shared_ptr<Newspaper>>     _newspaperContainer;
         // we just use an unsigned int to count at the moment
         unsigned int                                           _paperCounter;
+
+        sf::Texture                                            _paperTexture;
 };
 
 #endif // NEWSPAPER_CONTAINER_HPP

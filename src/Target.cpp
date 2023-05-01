@@ -7,19 +7,11 @@ Target::Target()
     _house.setSize(sf::Vector2f(128, 128)); 
 }
 
-void Target::spawn(sf::Vector2f spawnPos, bool left)
+void Target::spawn(sf::Vector2f spawnPos, bool left, const sf::Texture& texture)
 {
-    // this is why there should be the resourceholder... oh dear, that needs to be fixed
-    if (left)
-    {
-        _houseTexture.loadFromFile("./resources/images/House_left.png");
-    }
-    else
-        _houseTexture.loadFromFile("./resources/images/House_right.png");
-
     _isLeft = left;
 
-    _house.setTexture(&_houseTexture);
+    _house.setTexture(&texture);
     _house.setScale(2, 2);
     _target.setPosition(spawnPos);
     _target.setScale(2, 2);
