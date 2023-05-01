@@ -21,7 +21,7 @@ Game::Game()
 
     // TODO: Update when street boundaries are there
     _targetContainer.setBoundaries(710, 1210, _window.getSize().x);
-    _audioHandler.playMusic(true);
+    _audioHandler.playMusic(Music::ID::Running, true);
 }
 
 void Game::run() 
@@ -78,10 +78,11 @@ void Game::processEvents()
 
 void Game::update(sf::Time elapsedTime)
 {
-    if (   MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount() <= 0
+    if (MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount() <= 0
         && _gameState != STATE::GAMEOVER)
     {
         _gameState = STATE::GAMEOVER;
+        _audioHandler.toggleMusic();
         _hud.prepareGameOver();
     }
 
@@ -187,9 +188,12 @@ void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
         {
             case sf::Mouse::Button::Left:
             {
-                auto localPos = sf::Mouse::getPosition(_window);
-                _powerbar.setStartPoint(sf::Vector2f(localPos));
-                _leftMouseButtonHold = true;
+                if (_gameState == STATE::RUNNING)
+                {
+                    auto localPos = sf::Mouse::getPosition(_window);
+                    _powerbar.setStartPoint(sf::Vector2f(localPos));
+                    _leftMouseButtonHold = true;
+                }
                 break;
             }
             case sf::Mouse::Button::Right:
@@ -205,9 +209,12 @@ void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
         {
             case sf::Mouse::Button::Left:
             {
-                _newspaperContainer.spawnNewspaper(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle());
-                _audioHandler.playSound(SoundEffect::ID::Throw);
-                _leftMouseButtonHold = false;
+                if (_gameState == STATE::RUNNING)
+                {
+                    _newspaperContainer.spawnNewspaper(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle());
+                    _audioHandler.playSound(SoundEffect::ID::Throw);
+                    _leftMouseButtonHold = false;
+                }
                 break;
             }
             case sf::Mouse::Button::Right:
@@ -241,4 +248,6 @@ void Game::reset()
     _newspaperContainer.reset();
     _timeSinceLastTargetSpawn = 0;
     _playerScore = 0;
+    _audioHandler.toggleMusic();
+    _missedDelivery = 0;
 }

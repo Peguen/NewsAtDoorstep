@@ -13,13 +13,15 @@ class AudioHandler
         AudioHandler();
         ~AudioHandler(){};
 
-        void playMusic(bool /*yes or no to music*/);
+        void playMusic(Music::ID /*which music to play*/, bool /*possible to disable*/);
+        void toggleMusic();
 
         void playSound(SoundEffect::ID /*sound id*/);
 
     private:
         SoundBufferHolder       _soundBufferHolder;
-        sf::Music               _music;
+        sf::Music               _readerMusic;
+        sf::Music               _runnerMusic;
         std::list<sf::Sound>    _sounds;
         
 };

@@ -44,7 +44,8 @@ namespace Music
 {
 	enum ID
 	{
-		Main,
+		Running,
+		Reading,
 	};
 }
 
