@@ -12,6 +12,7 @@
 #include "CollisionHandler.hpp"
 #include "HUD.hpp"
 #include "AudioHandler.hpp"
+#include "FloorHandler.hpp"
 
 class Game : private sf::NonCopyable
 {
@@ -19,7 +20,8 @@ class Game : private sf::NonCopyable
         enum STATE
         {
             RUNNING,
-            GAMEOVER
+            GAMEOVER,
+            PAUSE
         };
                                 Game();
         void                    run();
@@ -56,6 +58,14 @@ class Game : private sf::NonCopyable
         unsigned int                                _missedDelivery;
 
         AudioHandler                                _audioHandler;
+        TextureHolder                               _textureHolder;
+        FloorHandler                                _floorHandler;
+
+        float                                       _spawnTime;
+        float                                       _playedTime;
+
+        bool                                        _soundOn;
+        bool                                        _musicOn;
 };
 
 #endif // GAME_HPP

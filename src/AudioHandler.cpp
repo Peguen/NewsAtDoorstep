@@ -7,17 +7,36 @@ AudioHandler::AudioHandler()
     _soundBufferHolder.load(SoundEffect::ID::Throw, "./resources/sounds/throw.ogg");
     _soundBufferHolder.load(SoundEffect::ID::Oy, "./resources/sounds/oy.ogg");
     
-    _music.openFromFile("./resources/music/lu_da_53_music.ogg");
-    _music.setLoop(true);
-    _music.setVolume(20.f);
+    _runnerMusic.openFromFile("./resources/music/lu_da_53_music_state_running.ogg");
+    _runnerMusic.setLoop(true);
+    _runnerMusic.setVolume(20.f);
+
+    _readerMusic.openFromFile("./resources/music/lu_da_53_music_state_reading.ogg");
+    _readerMusic.setLoop(true);
+    _readerMusic.setVolume(20.f);
 }
 
-void AudioHandler::playMusic(bool enable)
+void AudioHandler::playMusic(Music::ID musicID, bool enable)
 {
-    if (enable)
-        _music.play();
-    else
-        _music.pause();
+    switch (musicID) 
+    {
+        case Music::ID::Reading:
+        {
+            if(enable)
+                _readerMusic.play();
+            else
+                _readerMusic.stop();
+            break;
+        }
+        case Music::ID::Running:
+        {
+            if(enable)
+                _runnerMusic.play();
+            else
+                _runnerMusic.stop();
+            break;
+        }
+    }
 }
 
 void AudioHandler::playSound(SoundEffect::ID soundID)
@@ -28,4 +47,19 @@ void AudioHandler::playSound(SoundEffect::ID soundID)
     sound.setBuffer(_soundBufferHolder.get(soundID));
     // sound.setVolume(50.f);
     sound.play();
+}
+
+void AudioHandler::toggleMusic()
+{
+    // if both are stopped - no toggle
+    if (_runnerMusic.getStatus() == sf::SoundSource::Status::Playing)
+    {
+        _runnerMusic.stop();
+        _readerMusic.play();
+    }
+    else if (_readerMusic.getStatus() == sf::SoundSource::Status::Playing)
+    {
+        _readerMusic.stop();
+        _runnerMusic.play();
+    }
 }

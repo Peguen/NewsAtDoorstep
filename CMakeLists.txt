@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 
 project(
-    LudumDareGame
+    NewsAtDoorstep
     VERSION 0.1
     DESCRIPTION "First (GAME JAM) Game"
     LANGUAGES CXX

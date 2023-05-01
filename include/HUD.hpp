@@ -20,6 +20,8 @@ class HUD
         void prepareGameOver();
         void drawGameOverScreen(sf::RenderWindow& /*window to render*/);
 
+        void drawPauseScreen(sf::RenderWindow& /*window to render*/);
+
     private:
         void loadFonts();
         sf::Vector2u    _windowSize;
@@ -34,6 +36,9 @@ class HUD
         sf::Text            _newRecord;
         std::vector<int>    _highscoreList;
         bool                _isNewRecord;
+
+        void setupHowToPlay();
+        sf::Text            _howToPlay;
 };
 
 #endif // HUD_HPP

@@ -17,7 +17,10 @@ namespace Textures
 	{
 		Player,
 		Newspaper,
-		Targets,
+		LeftHouse,
+		RightHouse,
+		Street,
+		Gras
 	};
 }
 
@@ -44,7 +47,8 @@ namespace Music
 {
 	enum ID
 	{
-		Main,
+		Running,
+		Reading,
 	};
 }
 
