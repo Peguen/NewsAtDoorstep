@@ -9,7 +9,7 @@ class Target
         Target();
         ~Target() {};
 
-        void spawn(sf::Vector2f /*spawn position*/);
+        void spawn(sf::Vector2f /*spawn position*/, bool /*if left*/);
         
         void            drawTarget(sf::RenderWindow& /*target window*/);
         sf::Vector2f    getPosition();
@@ -19,8 +19,13 @@ class Target
 
     private:
         sf::RectangleShape  _target;
-        sf::RectangleShape  _targetOverlapp;
+        sf::RectangleShape  _house;
         bool                _gotDelivered;
+
+        sf::Texture         _houseTexture;
+        bool                _isLeft;
+
+        void calculateHousePosition();
 };
 
 #endif // TARGET_HPP

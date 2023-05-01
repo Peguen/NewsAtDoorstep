@@ -3,19 +3,54 @@
 Target::Target()
 : _gotDelivered(false)
 {
-    _target.setFillColor(sf::Color::Green);
-    _target.setSize(sf::Vector2f(100,100));
+    _target.setSize(sf::Vector2f(20, 100));
+    _house.setSize(sf::Vector2f(128, 128)); 
 }
 
-void Target::spawn(sf::Vector2f spawnPos)
+void Target::spawn(sf::Vector2f spawnPos, bool left)
 {
+    // this is why there should be the resourceholder... oh dear, that needs to be fixed
+    if (left)
+    {
+        _houseTexture.loadFromFile("./resources/images/House_left.png");
+    }
+    else
+        _houseTexture.loadFromFile("./resources/images/House_right.png");
+
+    _isLeft = left;
+
+    _house.setTexture(&_houseTexture);
+    _house.setScale(2, 2);
     _target.setPosition(spawnPos);
+    _target.setScale(2, 2);
 }
 
 void Target::drawTarget(sf::RenderWindow& window)
 {
     _target.move(sf::Vector2f(0, SCROLLING_SPEED));
-    window.draw(_target);
+
+    calculateHousePosition();
+    
+    window.draw(_house);
+    // for debug purposes
+    // window.draw(_target);
+}
+
+void Target::calculateHousePosition()
+{   
+    sf::Vector2f newPos;
+    auto targetPos = _target.getPosition();
+
+    if(_isLeft)
+    {
+        newPos.x = targetPos.x - 200;
+        newPos.y = targetPos.y - 20;
+    }
+    else{
+        newPos.x = targetPos.x - 20;
+        newPos.y = targetPos.y - 20;
+    }
+    _house.setPosition(newPos);
 }
 
 sf::Vector2f Target::getPosition()

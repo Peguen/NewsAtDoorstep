@@ -24,7 +24,7 @@ void TargetContainer::spawnTarget()
         _spawnLeft = true;
     }
     auto newTarget = std::make_shared<Target>();
-    newTarget->spawn(spawnPosition);
+    newTarget->spawn(spawnPosition, !_spawnLeft);
     _targetContainer[_targetCounter++] = newTarget;
 }
 
