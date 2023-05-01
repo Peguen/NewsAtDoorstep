@@ -11,6 +11,7 @@
 #include "TargetContainer.hpp"
 #include "CollisionHandler.hpp"
 #include "HUD.hpp"
+#include "AudioHandler.hpp"
 
 class Game : private sf::NonCopyable
 {
@@ -51,6 +52,10 @@ class Game : private sf::NonCopyable
 
         bool                                        _leftMouseButtonHold;
         STATE                                       _gameState;
+
+        unsigned int                                _missedDelivery;
+
+        AudioHandler                                _audioHandler;
 };
 
 #endif // GAME_HPP

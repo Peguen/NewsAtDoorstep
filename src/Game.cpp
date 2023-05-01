@@ -12,6 +12,7 @@ Game::Game()
 , _playerScore(0)
 , _gameState(STATE::RUNNING)
 , _leftMouseButtonHold(false)
+, _missedDelivery(0)
 {
     _window.setFramerateLimit(60);
 
@@ -20,6 +21,7 @@ Game::Game()
 
     // TODO: Update when street boundaries are there
     _targetContainer.setBoundaries(710, 1210, _window.getSize().x);
+    _audioHandler.playMusic(true);
 }
 
 void Game::run() 
@@ -104,9 +106,22 @@ void Game::update(sf::Time elapsedTime)
             }
 
             _collisionHandler.checkForCollisions(_paperLandedList);
+            for (auto targetHit: _paperLandedList)
+            {
+                if (targetHit)
+                    _audioHandler.playSound(SoundEffect::ID::Hit);
+                else
+                    _audioHandler.playSound(SoundEffect::ID::Fail);
+            }
             handleScoreList();
             _hud.setScore(_playerScore);
-            _hud.setMissedDelivery(MAX_MISS_DELIVERY - _targetContainer.getNotDeliveredCount());
+            if(_targetContainer.getNotDeliveredCount() > _missedDelivery)
+            {
+                _missedDelivery = _targetContainer.getNotDeliveredCount();
+                _audioHandler.playSound(SoundEffect::ID::Oy);
+            }
+
+            _hud.setMissedDelivery(MAX_MISS_DELIVERY - _missedDelivery);
             break;
         }
         
@@ -191,6 +206,7 @@ void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
             case sf::Mouse::Button::Left:
             {
                 _newspaperContainer.spawnNewspaper(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle());
+                _audioHandler.playSound(SoundEffect::ID::Throw);
                 _leftMouseButtonHold = false;
                 break;
             }

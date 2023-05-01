@@ -36,6 +36,7 @@ namespace SoundEffect
 		Throw,
 		Hit,
 		Fail,
+		Oy,
 	};
 }
 
