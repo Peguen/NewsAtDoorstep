@@ -11,6 +11,7 @@ set(SRC_FILES
     ../include/ResourceHolder.hpp
     HUD.cpp
     AudioHandler.cpp
+    FloorHandler.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SRC_FILES})

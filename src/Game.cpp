@@ -16,20 +16,15 @@ Game::Game()
 {
     _window.setFramerateLimit(60);
 
-    // TODO: Update when street boundaries are there
-    _targetContainer.setBoundaries(710, 1210, _window.getSize().x);
+    _targetContainer.setBoundaries(810, 110, _window.getSize().x);
     _audioHandler.playMusic(Music::ID::Running, true);
 
-    // Texture stuff
+    // Texture stuff - will not use texture holder, concept does not work and time issue
     _textureHolder.load(Textures::ID::Player, "./resources/images/Postman_sheet.png");
-    _textureHolder.load(Textures::ID::Newspaper, "./resources/images/Newspaper.png");
-    _textureHolder.load(Textures::ID::LeftHouse, "./resources/images/House_left.png");
-    _textureHolder.load(Textures::ID::RightHouse, "./resources/images/House_right.png");
-    _textureHolder.load(Textures::ID::Street, "./resources/images/Street.png");
-    _textureHolder.load(Textures::ID::Gras, "./resources/images/Gras.png");
 
-    // set player start position
+    // setup player
     _player.setPosition(sf::Vector2f(_window.getSize().x / 2, _window.getSize().y - _player.getSize().y - 50));
+    // just that the textureholder has something to do...
     _player.setTexture(&_textureHolder.get(Textures::ID::Player));
 }
 
@@ -151,6 +146,7 @@ void Game::render()
     {
         case STATE::RUNNING:
         {
+            _floorHandler.drawFloor(_window);
             _targetContainer.drawTargets(_window);
 
             _newspaperContainer.drawNewspaper(_window);

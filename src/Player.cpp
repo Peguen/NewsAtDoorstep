@@ -28,6 +28,7 @@ void Player::setPosition(sf::Vector2f newPosition)
 
 void Player::animate(sf::Time elapsedTime)
 {
+    // just some random animation speed which felt good
     if (150 <= _timeSinceLastAnimationStep)
     {
         _timeSinceLastAnimationStep = 0;

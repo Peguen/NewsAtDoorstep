@@ -12,6 +12,7 @@
 #include "CollisionHandler.hpp"
 #include "HUD.hpp"
 #include "AudioHandler.hpp"
+#include "FloorHandler.hpp"
 
 class Game : private sf::NonCopyable
 {
@@ -57,6 +58,7 @@ class Game : private sf::NonCopyable
 
         AudioHandler                                _audioHandler;
         TextureHolder                               _textureHolder;
+        FloorHandler                                _floorHandler;
 };
 
 #endif // GAME_HPP
