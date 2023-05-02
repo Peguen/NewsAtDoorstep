@@ -277,9 +277,13 @@ void Game::handlePlayerMouseInput(sf::Mouse::Button button, bool isPressed)
             {
                 if (_gameState == STATE::RUNNING)
                 {
-                    _newspaperContainer.spawnNewspaper(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle());
-                    if (_soundOn)
-                        _audioHandler.playSound(SoundEffect::ID::Throw);
+                    // safe from failed launch
+                    if (std::abs(_powerbar.getBarDirectionVector().x) > 0 || std::abs(_powerbar.getBarDirectionVector().y) > 0)
+                    {
+                        _newspaperContainer.spawnNewspaper(_player.getPosition(), _powerbar.getBarDirectionVector(), _powerbar.getBarRotationAngle());
+                        if (_soundOn)
+                            _audioHandler.playSound(SoundEffect::ID::Throw);
+                    }
                     _leftMouseButtonHold = false;
                 }
                 break;
@@ -313,9 +317,10 @@ void Game::reset()
     _gameState = STATE::RUNNING;
     _targetContainer.reset();
     _newspaperContainer.reset();
-    _timeSinceLastTargetSpawn = 4;
+    _timeSinceLastTargetSpawn = 4.0f;
     _playerScore = 0;
     _audioHandler.toggleMusic();
+    _audioHandler.reset();
     _missedDelivery = 0;
     _player.reset();
     _leftMouseButtonHold = false;

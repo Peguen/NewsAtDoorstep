@@ -15,6 +15,7 @@ class AudioHandler
 
         void playMusic(Music::ID /*which music to play*/, bool /*possible to disable*/);
         void toggleMusic();
+        void reset();
 
         void playSound(SoundEffect::ID /*sound id*/);
 
