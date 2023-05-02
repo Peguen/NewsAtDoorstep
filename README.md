@@ -1,1 +1,2 @@
-# lu_da_53_game
+# News @ Doorstep - a Ludum Dare 53 game
+https://ldjam.com/
