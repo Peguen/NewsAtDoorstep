@@ -63,3 +63,8 @@ void AudioHandler::toggleMusic()
         _runnerMusic.play();
     }
 }
+
+void AudioHandler::reset()
+{
+    _sounds.clear();
+}
